@@ -63,9 +63,17 @@ body {
   <a href="https://discord.gg/SrFZn7Tc3" target="_blank">Discord</a>
 </div>
 
-<audio controls autoplay loop>
+<audio id="music" autoplay loop muted>
   <source src="HAI THẰNG BỊP - SIX REMIX & ODIN MIX  Tau Ghét 2 Thằng Đó 🎵  Nhạc Hót TikTok 2026 Full Track - Đình Hiếu Mix (youtube).mp3" type="audio/mpeg">
 </audio>
+
+<script>
+window.addEventListener("click", () => {
+  const music = document.getElementById("music");
+  music.muted = false;
+  music.play();
+});
+</script>
 
 
 </div>
