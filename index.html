@@ -13,12 +13,25 @@ body {
   font-family: Arial;
   color: white;
   text-align: center;
-  background: url('https://i.imgur.com/8Km9tLL.jpg') no-repeat center/cover;
+  background: black;
 }
 
-/* blur nền */
+/* nền blur */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://i.postimg.cc/43fk3j7D/pngtree-neon-lit-tunnel-pink-purple-grid-background-futuristic-corridor-image-21189434.webp') no-repeat center/cover;
+  filter: blur(20px) brightness(var(--bright, 0.6));
+  transform: scale(1.1);
+  z-index: -1;
+  transition: 0.1s;
+}
+
+/* overlay */
 .overlay {
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.3);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,13 +46,12 @@ body {
   border-radius: 50%;
   border: 3px solid #a855f7;
   object-fit: cover;
-  box-shadow: 0 0 20px #a855f7;
   animation: glow 1.5s infinite alternate;
 }
 
 @keyframes glow {
   from { box-shadow: 0 0 10px #a855f7; }
-  to { box-shadow: 0 0 35px #a855f7, 0 0 60px #9333ea; }
+  to { box-shadow: 0 0 40px #a855f7, 0 0 80px #ec4899; }
 }
 
 .name {
@@ -47,7 +59,6 @@ body {
   margin-top: 10px;
 }
 
-/* mắt xem */
 .views {
   margin-top: 5px;
   font-size: 14px;
@@ -88,7 +99,6 @@ body {
 
 .social a:hover {
   transform: scale(1.15);
-  background: rgba(255,255,255,0.2);
 }
 
 /* thanh nhạc */
@@ -108,8 +118,7 @@ body {
 .progress-bar {
   height: 100%;
   width: 0%;
-  background: #a855f7;
-  transition: width 0.2s;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
 }
 </style>
 </head>
@@ -122,14 +131,12 @@ body {
 
 <div class="name">Đình Hoàng zZ</div>
 
-<!-- mắt xem -->
 <div class="views">
   <i class="fa fa-eye"></i> 12
 </div>
 
 <img src="https://i.postimg.cc/HLGc3pD4/21ab5800-86ff-498c-8590-4425065e1078.jpg" class="qr">
 
-<!-- icon -->
 <div class="social">
   <a href="https://www.facebook.com/share/14buU88ki52/" target="_blank">
     <i class="fab fa-facebook-f"></i>
@@ -142,15 +149,14 @@ body {
   </a>
 </div>
 
-<!-- thanh nhạc -->
 <div class="player">
   <div class="progress">
     <div class="progress-bar" id="bar"></div>
   </div>
 </div>
 
-<audio id="music" autoplay loop muted>
-  <source src="HAI THẰNG BỊP - SIX REMIX & ODIN MIX  Tau Ghét 2 Thằng Đó 🎵  Nhạc Hót TikTok 2026 Full Track - Đình Hiếu Mix (youtube).mp3" type="audio/mpeg">
+<audio id="music" loop>
+  <source src="HAI THẰNG BỊP - SIX REMIX & ODIN MIX Tau Ghét 2 Thằng Đó 🎵 Nhạc Hót TikTok 2026 Full Track - Đình Hiếu Mix (youtube).mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -158,19 +164,22 @@ const music = document.getElementById("music");
 const bar = document.getElementById("bar");
 
 window.addEventListener("click", () => {
-  music.muted = false;
   music.play();
-});
 
-music.addEventListener("timeupdate", () => {
-  const percent = (music.currentTime / music.duration) * 100;
-  bar.style.width = percent + "%";
+  // chạy thanh nhạc thôi, bỏ audioContext
+  function update() {
+    if (music.duration) {
+      let percent = (music.currentTime / music.duration) * 100;
+      bar.style.width = percent + "%";
+    }
+    requestAnimationFrame(update);
+  }
+
+  update();
 });
 </script>
 
 </div>
 
-</body>
-</html>
 </body>
 </html>
