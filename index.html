@@ -163,10 +163,9 @@ body::before {
 const music = document.getElementById("music");
 const bar = document.getElementById("bar");
 
-window.addEventListener("click", () => {
-  music.play();
+document.body.addEventListener("click", () => {
+  music.play().catch(() => {});
 
-  // chạy thanh nhạc thôi, bỏ audioContext
   function update() {
     if (music.duration) {
       let percent = (music.currentTime / music.duration) * 100;
